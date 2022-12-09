@@ -32,31 +32,21 @@ def all_posts(request):
 
 
 def post_comments_likes(request):
-    id_post = request.GET.get('id')
-    if id_post is None:
-        curr_post = posts[0]
-    elif int(id_post) - 1 > len(posts):
+    id_post = request.GET.get('id', '1')
+    if int(id_post) - 1 > len(posts):
         curr_post = posts[0]
     else:
         curr_post = posts[int(id_post) - 1]
-    likes = request.GET.get('likes')
-    if likes is None:
-        likes = '1'
-    comments = request.GET.get('comments')
-    if comments is None:
-        comments = '1'
+    likes = request.GET.get('likes', '1')
+    comments = request.GET.get('comments', '1')
 
     return HttpResponse(f"""Post from {curr_post[0]} have {likes}
                          likes and {comments} comments""")
 
 
 def login_password(request):
-    login = request.GET.get('login')
-    if login is None:
-        login = 'admin'
-    password = request.GET.get('password')
-    if password is None:
-        password = 'admin'
+    login = request.GET.get('login', 'admin')
+    password = request.GET.get('password', 'admin')
     return HttpResponse(f"""<b>Your login</b>: {login}<br>
                             <b>Your password</b>: {password}
                         """)
